@@ -1,21 +1,33 @@
 const express = require('express');
 const logger = require('morgan');
 const expressGraphQL = require('express-graphql').graphqlHTTP;
-const schema = require('./schema');
+
+const schema = require('./src/component/schema');
+const responseGenerator = require('./src/helper/responseGenerator');
 
 const app = express();
-const { serverPort } = require('./config/index');
+const { serverPort } = require('./config/env.config');
+const { auth } = require('./src/middleware/auth');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(auth);
 app.use(
   '/graphql',
-  expressGraphQL({
+  expressGraphQL(req => ({
     schema,
+    context: {
+      user: req.user,
+    },
     graphiql: true,
-  })
+  }))
 );
+
+app.use((err, request, response, next) => {
+  const errorResponse = responseGenerator.getErrorResponse(err);
+  response.status(errorResponse.httpStatusCode).send(errorResponse.body);
+});
 
 app.listen(serverPort, () => console.info(`GraphQL server running on localhost:${serverPort}`));

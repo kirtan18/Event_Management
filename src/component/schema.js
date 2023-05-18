@@ -1,8 +1,8 @@
 const graphql = require('graphql');
 
 const { GraphQLSchema, GraphQLObjectType } = graphql;
-const { getEvents, getEventById, getEventsByLocationOrDate } = require('./src/component/events/events.query');
-const { createEvent, updateEvent, deleteEvent } = require('./src/component/events/events.mutation');
+const { getEvents, getEventById, getEventsByLocationOrDate } = require('./events/events.query');
+const { createEvent, updateEvent, deleteEvent } = require('./events/events.mutation');
 
 const RootQueryType = new GraphQLObjectType({
   name: 'Query',

@@ -48,11 +48,4 @@ module.exports = {
       message: 'Please write correct details'
     }
   },
-  DELIVERY_ERROR: {
-    httpStatusCode: 554,
-    body: {
-      code: 'Failed_to_sent_mail',
-      message: 'your message cannot be delivered'
-    }
-  },
 };

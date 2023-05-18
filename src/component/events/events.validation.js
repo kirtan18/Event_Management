@@ -2,8 +2,10 @@ const Joi = require('joi');
 
 module.exports = {
   getEventsSchema: Joi.object({
+    sortBy: Joi.string().valid('eventId', 'title', 'location', 'startDate').required(),
+    orderBy: Joi.string().valid('ASC', 'DESC').required(),
     limit: Joi.number().integer().required(),
-    offSet: Joi.number().integer().required()
+    offSet: Joi.number().integer().required(),
   }),
   getEventByIdSchema: Joi.object({
     id: Joi.number().integer().required()
