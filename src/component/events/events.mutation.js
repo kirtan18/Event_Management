@@ -4,9 +4,11 @@ const {
   GraphQLList, GraphQLInt, GraphQLString
 } = graphql;
 const { EventType } = require('./events.types');
-const { pool } = require('../../../config/db.config');
+const { dbConnPool } = require('../../../config/db.config');
 const { createEventSchema, updateEventSchema, deleteEventSchema } = require('./events.validation');
-const updateQuery = require('../../helper/updateQuery.helper');
+
+const { currentDate } = require('../../constant/constantVariables');
+const eventsDal = require('./events.dal');
 
 module.exports = {
   createEvent: {
@@ -21,28 +23,22 @@ module.exports = {
       createdAt: { type: GraphQLString },
     },
     resolve: async (parentValue, args) => {
-      const {
-        title, description, location, startDate, endDate, createdBy, createdAt
-      } = args;
-
-      const { error } = createEventSchema.validate({
-        title, description, location, startDate, endDate, createdBy, createdAt
-      });
-      if (error) {
-        throw new Error(error.details[0].message);
+      const dbClient = await dbConnPool.connect();
+      try {
+        const validateValues = { ...args };
+        const { error } = createEventSchema.validate(validateValues);
+        if (error) {
+          console.info(error.details[0].message);
+          throw new Error(error.details[0].message);
+        }
+        const values = [args.title, args.description, args.location, args.startDate, args.endDate,
+          args.createdBy, args.createdAt
+        ];
+        const repsonse = eventsDal.createEventDal(dbClient, values);
+        return repsonse;
+      } finally {
+        dbClient.release();
       }
-
-      const sqlQuery = `
-                  INSERT INTO events(
-                    title, description, location, "startDate", 
-                    "endDate", "createdBy", "createdAt"
-                  ) 
-                  VALUES 
-                    ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
-
-      const paramters = [title, description, location, startDate, endDate, createdBy, createdAt];
-      const result = await pool.query(sqlQuery, paramters);
-      return result.rows;
     }
   },
 
@@ -56,26 +52,23 @@ module.exports = {
       id: { type: GraphQLInt },
     },
     resolve: async (parentValue, args) => {
-      const validateValues = { ...args };
-      const { error } = updateEventSchema.validate(validateValues);
-      if (error) {
-        throw new Error(error.details[0].message);
-      }
-      // eslint-disable-next-line no-param-reassign
-      args.updatedAt = new Date().toISOString().slice(0, 10);
-      const columns = Object.keys(args).filter(key => key !== 'id');
-      const values = columns.map(item => args[item]);
-      const sqlQuery = `
-                UPDATE 
-                   events 
-                SET 
-                   ${updateQuery.updateQueryData(columns)} 
-                WHERE 
-                   "eventId" = $${columns.length + 1} RETURNING *`;
+      const dbClient = await dbConnPool.connect();
+      try {
+        const validateValues = { ...args };
+        const { error } = updateEventSchema.validate(validateValues);
+        if (error) {
+          throw new Error(error.details[0].message);
+        }
+        args.updatedAt = currentDate;
+        const columns = Object.keys(args).filter(key => key !== 'id');
+        const values = columns.map(item => args[item]);
+        const parameters = [...values, args.id];
 
-      const parameters = [...values, args.id];
-      const result = await pool.query(sqlQuery, parameters);
-      return result.rows;
+        const response = eventsDal.updateEventDal(dbClient, columns, parameters);
+        return response;
+      } finally {
+        dbClient.release();
+      }
     }
   },
 
@@ -85,21 +78,19 @@ module.exports = {
       id: { type: GraphQLInt },
     },
     resolve: async (parentValue, args) => {
-      const { id } = args;
-      const { error } = deleteEventSchema.validate({ id });
-      if (error) {
-        throw new Error(error.details[0].message);
+      const dbClient = await dbConnPool.connect();
+      try {
+        const { id } = args;
+        const { error } = deleteEventSchema.validate({ id });
+        if (error) {
+          throw new Error(error.details[0].message);
+        }
+        const values = [id];
+        const response = eventsDal.deleteEventDal(dbClient, values);
+        return response;
+      } finally {
+        dbClient.release();
       }
-
-      const sqlQuery = `
-                  DELETE FROM 
-                     events 
-                  WHERE 
-                     "eventId" = $1 RETURNING "eventId"`;
-
-      const parameter = [id];
-      const result = await pool.query(sqlQuery, parameter);
-      return result.rows;
     }
   }
 };

@@ -1,5 +1,5 @@
 const { Pool } = require('pg');
-const { dbConfig } = require('./index');
+const { dbConfig } = require('./env.config');
 
 const pool = new Pool({
   user: dbConfig.user,
@@ -23,5 +23,5 @@ const pool = new Pool({
 });
 
 module.exports = {
-  pool
+  dbConnPool: pool
 };
