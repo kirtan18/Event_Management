@@ -63,6 +63,8 @@ module.exports = {
         const values = [id];
         const repsonse = eventsDal.getEventByIdDal(dbClient, values);
         return repsonse;
+      } catch (error) {
+        throw new Error(error);
       } finally {
         dbClient.release();
       }

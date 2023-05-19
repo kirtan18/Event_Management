@@ -2,7 +2,7 @@ CREATE SEQUENCE e_id;
 
 CREATE TABLE events(
     "eventId" INT primary KEY default nextval('e_id'),
-    title TEXT NOT NULL,
+    title TEXT UNIQUE NOT NULL,
     description TEXT NOT NULL,
     location TEXT NOT NULL,
     "startDate" TEXT NOT NULL,

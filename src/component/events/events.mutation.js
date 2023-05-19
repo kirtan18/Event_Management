@@ -9,6 +9,7 @@ const { createEventSchema, updateEventSchema, deleteEventSchema } = require('./e
 
 const { currentDate } = require('../../constant/constantVariables');
 const eventsDal = require('./events.dal');
+const { publishEventCreated, publishEventUpdated } = require('./events.subscription');
 
 module.exports = {
   createEvent: {
@@ -34,8 +35,10 @@ module.exports = {
         const values = [args.title, args.description, args.location, args.startDate, args.endDate,
           args.createdBy, args.createdAt
         ];
-        const repsonse = eventsDal.createEventDal(dbClient, values);
-        return repsonse;
+        const response = await eventsDal.createEventDal(dbClient, values);
+        const createdEvent = response;
+        publishEventCreated(createdEvent);
+        return response;
       } finally {
         dbClient.release();
       }
@@ -59,12 +62,15 @@ module.exports = {
         if (error) {
           throw new Error(error.details[0].message);
         }
+        // eslint-disable-next-line no-param-reassign
         args.updatedAt = currentDate;
         const columns = Object.keys(args).filter(key => key !== 'id');
         const values = columns.map(item => args[item]);
         const parameters = [...values, args.id];
 
-        const response = eventsDal.updateEventDal(dbClient, columns, parameters);
+        const response = await eventsDal.updateEventDal(dbClient, columns, parameters);
+        const updatedEvent = response;
+        publishEventUpdated(updatedEvent);
         return response;
       } finally {
         dbClient.release();
@@ -86,7 +92,7 @@ module.exports = {
           throw new Error(error.details[0].message);
         }
         const values = [id];
-        const response = eventsDal.deleteEventDal(dbClient, values);
+        const response = await eventsDal.deleteEventDal(dbClient, values);
         return response;
       } finally {
         dbClient.release();
