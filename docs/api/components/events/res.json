@@ -1,0 +1,258 @@
+{
+  "getEvents": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "example": "27"
+        },
+        "title": {
+          "type": "string",
+          "example": "cheking"
+        },
+        "description": {
+          "type": "string",
+          "example": "Checking AMERICAFIRST QUANTITATIVE STRATEGIES FUND CLASS C"
+        },
+        "location": {
+          "type": "string",
+          "example": "ahmedabad"
+        },
+        "startDate": {
+          "type": "string",
+          "example": "2023-05-11"
+        },
+        "endDate": {
+          "type": "string",
+          "example": "2023-05-20"
+        },
+        "createdBy": {
+          "type": "string",
+          "example": "JOHN"
+        },
+        "updatedBy": {
+          "type": "string",
+          "example": "WICK"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2023-05-12"
+        },
+        "updatedAt": {
+          "type": "string",
+          "example": "2023-05-19"
+        }
+      }
+    }
+  },
+  "getEventByID":{
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "example": "50"
+        },
+        "title": {
+          "type": "string",
+          "example": "MissionImpossible"
+        },
+        "description": {
+          "type": "string",
+          "example": "Checking Mission QUANTITATIVE STRATEGIES FUND"
+        },
+        "location": {
+          "type": "string",
+          "example": "Mahesana"
+        },
+        "startDate": {
+          "type": "string",
+          "example": "2023-05-26"
+        },
+        "endDate": {
+          "type": "string",
+          "example": "2023-05-30"
+        },
+        "createdBy": {
+          "type": "string",
+          "example": "Harry"
+        },
+        "updatedBy": {
+          "type": "string",
+          "example": "Potter"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2023-05-28"
+        },
+        "updatedAt": {
+          "type": "string",
+          "example": "2023-05-29"
+        }
+      }
+    }
+  },
+  "getEventsByLocationOrDate":{
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "example": "39"
+        },
+        "title": {
+          "type": "string",
+          "example": "Thunder"
+        },
+        "description": {
+          "type": "string",
+          "example": "Checking Thor Thunder FUND CLASS C"
+        },
+        "location": {
+          "type": "string",
+          "example": "Surat"
+        },
+        "startDate": {
+          "type": "string",
+          "example": "2023-05-23"
+        },
+        "endDate": {
+          "type": "string",
+          "example": "2023-05-29"
+        },
+        "createdBy": {
+          "type": "string",
+          "example": "Thor"
+        },
+        "updatedBy": {
+          "type": "string",
+          "example": "Thunder"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2023-05-24"
+        },
+        "updatedAt": {
+          "type": "string",
+          "example": "2023-05-27"
+        }
+      }
+    }
+  },
+  "createEvent": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "example": "39"
+        },
+        "title": {
+          "type": "string",
+          "example": "Thunder"
+        },
+        "description": {
+          "type": "string",
+          "example": "Checking Thor Thunder FUND CLASS C"
+        },
+        "location": {
+          "type": "string",
+          "example": "Surat"
+        },
+        "startDate": {
+          "type": "string",
+          "example": "2023-05-23"
+        },
+        "endDate": {
+          "type": "string",
+          "example": "2023-05-29"
+        },
+        "createdBy": {
+          "type": "string",
+          "example": "Thor"
+        },
+        "updatedBy": {
+          "type": "string",
+          "example": "Thunder"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2023-05-24"
+        },
+        "updatedAt": {
+          "type": "string",
+          "example": "2023-05-27"
+        }
+      }
+    }
+  },
+  "updateEvent": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "example": "39"
+        },
+        "title": {
+          "type": "string",
+          "example": "Thunder"
+        },
+        "description": {
+          "type": "string",
+          "example": "Checking Thor Thunder FUND CLASS C"
+        },
+        "location": {
+          "type": "string",
+          "example": "Surat"
+        },
+        "startDate": {
+          "type": "string",
+          "example": "2023-05-23"
+        },
+        "endDate": {
+          "type": "string",
+          "example": "2023-05-29"
+        },
+        "createdBy": {
+          "type": "string",
+          "example": "Thor"
+        },
+        "updatedBy": {
+          "type": "string",
+          "example": "Thunder"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2023-05-24"
+        },
+        "updatedAt": {
+          "type": "string",
+          "example": "2023-05-27"
+        }
+      }
+    }
+  },
+  "deleteEvent": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "example": "59"
+        },
+        "title": {
+          "type": "string",
+          "example": "Steel"
+        }
+      }
+    }
+  }
+}
