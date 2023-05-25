@@ -1,0 +1,38 @@
+{
+  "ValidationErrorResponse": {
+    "type": "object",
+    "properties": {
+      "errors": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "unauthorized_access"
+          },
+          "messages": {
+            "type": "string",
+            "description": "Authentication Credentials Invalid."
+          }
+        }
+      }
+    }
+  },
+  "ErrorResponse": {
+    "type": "object",
+    "properties": {
+      "errors": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Unauthorized_access"
+          },
+          "messages": {
+            "type": "string",
+            "description": "Authentication Credentials Invalid."
+          }
+        }
+      }
+    }
+  }
+}

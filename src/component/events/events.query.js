@@ -19,6 +19,57 @@ const getValues = (args) => {
 };
 
 module.exports = {
+  /**
+ * @swagger
+ * /graphql/getEvents:
+ *   post:
+ *     tags:
+ *       - Events
+ *     summary: To return all existing events
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: sortBy
+ *         required: true
+ *         type: string
+ *         enum: [eventId, title, location, startDate]
+ *       - in: query
+ *         name: orderBy
+ *         required: true
+ *         type: string
+ *         enum:
+ *         - ASC
+ *         - DESC
+ *       - in: query
+ *         name: limit
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 10
+ *       - in: query
+ *         name: offSet
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 2
+ *     responses:
+ *       200:
+ *         description: successful operation.
+ *         schema:
+ *           $ref: 'components/events/res.json#getEvents'
+ *       400:
+ *         description: Bad Request - validation error
+ *         schema:
+ *           $ref: 'components/errorContracts.json#ValidationErrorResponse'
+ *       500:
+ *         description: Internal Server Error
+ *         schema:
+ *           $ref: 'components/errorContracts.json#/ErrorResponse'
+ */
   getEvents: {
     type: new GraphQLList(EventType),
     args: {
@@ -47,6 +98,39 @@ module.exports = {
     },
   },
 
+  /**
+ * @swagger
+ * /graphql/getEventById:
+ *   post:
+ *     tags:
+ *       - Events
+ *     summary: To return Event by Id
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         schema:
+ *           type: string
+ *         required: true
+ *       - in: query
+ *         name: Id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 49
+ *     responses:
+ *       200:
+ *         description: successful operation.
+ *         schema:
+ *           $ref: 'components/events/res.json#getEventByID'
+ *       400:
+ *         description: Bad Request - validation error
+ *         schema:
+ *           $ref: 'components/errorContracts.json#ValidationErrorResponse'
+ *       500:
+ *         description: Internal Server Error
+ *         schema:
+ *           $ref: 'components/errorContracts.json#/ErrorResponse'
+ */
   getEventById: {
     type: new GraphQLList(EventType),
     args: {
@@ -71,6 +155,43 @@ module.exports = {
     },
   },
 
+  /**
+ * @swagger
+ * /graphql/getEventsByLocationOrDate:
+ *   post:
+ *     tags:
+ *       - Events
+ *     summary: To return Event by Location or Date
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         schema:
+ *           type: string
+ *         required: true
+ *       - in: query
+ *         name: date
+ *         schema:
+ *           type: string
+ *           example: "2023-05-12"
+ *       - in: query
+ *         name: location
+ *         schema:
+ *           type: string
+ *           example: ahmedabad
+ *     responses:
+ *       200:
+ *         description: successful operation.
+ *         schema:
+ *           $ref: 'components/events/res.json#getEventsByLocationOrDate'
+ *       400:
+ *         description: Bad Request - validation error
+ *         schema:
+ *           $ref: 'components/errorContracts.json#ValidationErrorResponse'
+ *       500:
+ *         description: Internal Server Error
+ *         schema:
+ *           $ref: 'components/errorContracts.json#/ErrorResponse'
+ */
   getEventsByLocationOrDate: {
     type: new GraphQLList(EventType),
     args: {

@@ -1,7 +1,7 @@
 const express = require('express');
 const logger = require('morgan');
 const { createServer } = require('http');
-const expressGraphQL = require('express-graphql').graphqlHTTP;
+const { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
 const { execute, subscribe } = require('graphql');
 const { SubscriptionServer } = require('subscriptions-transport-ws');
 const { schema } = require('./src/component/schema');
@@ -15,16 +15,25 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/docs', express.static('docs/api'));
+
 app.use(auth);
+
 app.use(
   '/graphql',
-  expressGraphQL(req => ({
+  graphqlExpress({
     schema,
-    context: {
-      user: req.user,
-    },
     graphiql: true,
-  }))
+  })
+);
+
+app.use(
+  '/graphiql',
+  graphiqlExpress({
+    endpointURL: '/graphql',
+    subscriptionsEndpoint: `ws://localhost:${serverPort}/subscriptions`,
+    graphiql: true,
+  })
 );
 
 app.use((err, request, response, next) => {
@@ -34,18 +43,18 @@ app.use((err, request, response, next) => {
 
 const server = createServer(app);
 server.listen(serverPort, () => {
-  console.info(`GraphQL server running on localhost:${serverPort}`);
-
   // eslint-disable-next-line no-new
   new SubscriptionServer(
     {
       execute,
       subscribe,
       schema,
+      onConnect: () => console.info('Client connected'),
     },
     {
       server,
       path: '/subscriptions',
     }
   );
+  console.info(`GraphQL server running on localhost:${serverPort}`);
 });

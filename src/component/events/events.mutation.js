@@ -12,6 +12,81 @@ const eventsDal = require('./events.dal');
 const { publishEventCreated, publishEventUpdated } = require('./events.subscription');
 
 module.exports = {
+  /**
+ * @swagger
+ * /graphql/createEvent:
+ *   post:
+ *     tags:
+ *       - Events
+ *     summary: Generate New Event
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: title
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: Javascript
+ *       - in: query
+ *         name: description
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: AMERICAFIRST FUND
+ *       - in: query
+ *         name: location
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: Ahmedabad
+ *       - in: query
+ *         name: startDate
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: 2023-05-24
+ *       - in: query
+ *         name: endDate
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: 2023-05-30
+ *       - in: query
+ *         name: endDate
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: 2023-05-30
+ *       - in: query
+ *         name: createdBy
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: Hulk
+ *       - in: query
+ *         name: createdAt
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: 2023-05-27
+ *     responses:
+ *       200:
+ *         description: successful operation.
+ *         schema:
+ *           $ref: 'components/events/res.json#createEvent'
+ *       400:
+ *         description: Bad Request - validation error
+ *         schema:
+ *           $ref: 'components/errorContracts.json#ValidationErrorResponse'
+ *       500:
+ *         description: Internal Server Error
+ *         schema:
+ *           $ref: 'components/errorContracts.json#/ErrorResponse'
+ */
   createEvent: {
     type: new GraphQLList(EventType),
     args: {
@@ -45,6 +120,59 @@ module.exports = {
     }
   },
 
+  /**
+ * @swagger
+ * /graphql/updateEvent:
+ *   post:
+ *     tags:
+ *       - Events
+ *     summary: update Event
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: title
+ *         schema:
+ *           type: string
+ *           example: Javascript
+ *       - in: query
+ *         name: description
+ *         schema:
+ *           type: string
+ *           example: AMERICAFIRST FUND
+ *       - in: query
+ *         name: location
+ *         schema:
+ *           type: string
+ *           example: Ahmedabad
+ *       - in: query
+ *         name: updatedBy
+ *         schema:
+ *           type: string
+ *           example: Captain America
+ *       - in: query
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: ineteger
+ *           example: 19
+ *     responses:
+ *       200:
+ *         description: successful operation.
+ *         schema:
+ *           $ref: 'components/events/res.json#updateEvent'
+ *       400:
+ *         description: Bad Request - validation error
+ *         schema:
+ *           $ref: 'components/errorContracts.json#ValidationErrorResponse'
+ *       500:
+ *         description: Internal Server Error
+ *         schema:
+ *           $ref: 'components/errorContracts.json#/ErrorResponse'
+ */
   updateEvent: {
     type: new GraphQLList(EventType),
     args: {
@@ -78,6 +206,39 @@ module.exports = {
     }
   },
 
+  /**
+ * @swagger
+ * /graphql/deleteEvent:
+ *   post:
+ *     tags:
+ *       - Events
+ *     summary: Delete Event
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 29
+ *     responses:
+ *       200:
+ *         description: successful operation.
+ *         schema:
+ *           $ref: 'components/events/res.json#deleteEvent'
+ *       400:
+ *         description: Bad Request - validation error
+ *         schema:
+ *           $ref: 'components/errorContracts.json#ValidationErrorResponse'
+ *       500:
+ *         description: Internal Server Error
+ *         schema:
+ *           $ref: 'components/errorContracts.json#/ErrorResponse'
+ */
   deleteEvent: {
     type: new GraphQLList(EventType),
     args: {

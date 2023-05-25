@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon ./app.js",
     "lint": ".\\node_modules\\.bin\\eslint **/*.js",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "docs": "swagger-jsdoc ./src/component/**/*.*.js -d docs/api/swaggerDef.js -o docs/api/openApiSpecs.json"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +19,8 @@
     "express": "^4.18.2",
     "express-graphql": "^0.12.0",
     "express-validation": "^4.1.0",
-    "graphql": "^16.6.0",
+    "graphql": "^0.13.0",
+    "graphql-server-express": "^1.0.0",
     "graphql-subscriptions": "^2.0.0",
     "http-errors": "^2.0.0",
     "joi": "^17.9.2",
@@ -34,6 +36,7 @@
     "eslint": "^8.40.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.27.5",
-    "husky": "^8.0.3"
+    "husky": "^8.0.3",
+    "swagger-jsdoc": "^6.2.8"
   }
 }

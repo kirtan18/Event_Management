@@ -1,0 +1,452 @@
+{
+  "info": {
+    "title": "Event Management",
+    "version": "0.0.1",
+    "description": "Event Management documentation",
+    "termsOfService": "https://zuru.tech/terms",
+    "contact": {
+      "email": "apiteam@zuru.tech"
+    },
+    "license": {
+      "name": "Dreamcatcher license",
+      "url": "https://zuru.tech/Dreamcatcher/licenses/LICENSE.html"
+    }
+  },
+  "host": "localhost:3333",
+  "basePath": "/",
+  "apis": [
+    "./src/component/**/*.route.js"
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "swagger": "2.0",
+  "paths": {
+    "/graphql/createEvent": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Generate New Event",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "title",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Javascript"
+            }
+          },
+          {
+            "in": "query",
+            "name": "description",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "AMERICAFIRST FUND"
+            }
+          },
+          {
+            "in": "query",
+            "name": "location",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Ahmedabad"
+            }
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "2023-05-24"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "2023-05-30"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "2023-05-30"
+            }
+          },
+          {
+            "in": "query",
+            "name": "createdBy",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Hulk"
+            }
+          },
+          {
+            "in": "query",
+            "name": "createdAt",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "2023-05-27"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation.",
+            "schema": {
+              "$ref": "components/events/res.json#createEvent"
+            }
+          },
+          "400": {
+            "description": "Bad Request - validation error",
+            "schema": {
+              "$ref": "components/errorContracts.json#ValidationErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "components/errorContracts.json#/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/graphql/updateEvent": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "update Event",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "title",
+            "schema": {
+              "type": "string",
+              "example": "Javascript"
+            }
+          },
+          {
+            "in": "query",
+            "name": "description",
+            "schema": {
+              "type": "string",
+              "example": "AMERICAFIRST FUND"
+            }
+          },
+          {
+            "in": "query",
+            "name": "location",
+            "schema": {
+              "type": "string",
+              "example": "Ahmedabad"
+            }
+          },
+          {
+            "in": "query",
+            "name": "updatedBy",
+            "schema": {
+              "type": "string",
+              "example": "Captain America"
+            }
+          },
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "ineteger",
+              "example": 19
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation.",
+            "schema": {
+              "$ref": "components/events/res.json#updateEvent"
+            }
+          },
+          "400": {
+            "description": "Bad Request - validation error",
+            "schema": {
+              "$ref": "components/errorContracts.json#ValidationErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "components/errorContracts.json#/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/graphql/deleteEvent": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Delete Event",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 29
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation.",
+            "schema": {
+              "$ref": "components/events/res.json#deleteEvent"
+            }
+          },
+          "400": {
+            "description": "Bad Request - validation error",
+            "schema": {
+              "$ref": "components/errorContracts.json#ValidationErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "components/errorContracts.json#/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/graphql/getEvents": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "To return all existing events",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortBy",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "eventId",
+              "title",
+              "location",
+              "startDate"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "orderBy",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "ASC",
+              "DESC"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 10
+            }
+          },
+          {
+            "in": "query",
+            "name": "offSet",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 2
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation.",
+            "schema": {
+              "$ref": "components/events/res.json#getEvents"
+            }
+          },
+          "400": {
+            "description": "Bad Request - validation error",
+            "schema": {
+              "$ref": "components/errorContracts.json#ValidationErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "components/errorContracts.json#/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/graphql/getEventById": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "To return Event by Id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "Id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 49
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation.",
+            "schema": {
+              "$ref": "components/events/res.json#getEventByID"
+            }
+          },
+          "400": {
+            "description": "Bad Request - validation error",
+            "schema": {
+              "$ref": "components/errorContracts.json#ValidationErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "components/errorContracts.json#/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/graphql/getEventsByLocationOrDate": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "To return Event by Location or Date",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "date",
+            "schema": {
+              "type": "string",
+              "example": "2023-05-12"
+            }
+          },
+          {
+            "in": "query",
+            "name": "location",
+            "schema": {
+              "type": "string",
+              "example": "ahmedabad"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation.",
+            "schema": {
+              "$ref": "components/events/res.json#getEventsByLocationOrDate"
+            }
+          },
+          "400": {
+            "description": "Bad Request - validation error",
+            "schema": {
+              "$ref": "components/errorContracts.json#ValidationErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "components/errorContracts.json#/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {},
+  "responses": {},
+  "parameters": {},
+  "securityDefinitions": {},
+  "tags": []
+}
