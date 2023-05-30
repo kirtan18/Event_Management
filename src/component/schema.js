@@ -1,6 +1,8 @@
 const graphql = require('graphql');
 
-const { GraphQLSchema, GraphQLObjectType } = graphql;
+const {
+  GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLInt
+} = graphql;
 const PubSub = require('PubSub');
 const { getEvents, getEventById, getEventsByLocationOrDate } = require('./events/events.query');
 const { createEvent, updateEvent, deleteEvent } = require('./events/events.mutation');
@@ -8,12 +10,21 @@ const { eventCreated, eventUpdated } = require('./events/events.subscription');
 
 const pubsub = new PubSub();
 
+const EventType = new GraphQLObjectType({
+  name: 'Event',
+  fields: {
+    eventId: { type: GraphQLInt },
+    title: { type: GraphQLString },
+    description: { type: GraphQLString },
+  },
+});
+
 const RootQueryType = new GraphQLObjectType({
   name: 'Query',
   fields: {
     getEvents,
     getEventById,
-    getEventsByLocationOrDate
+    getEventsByLocationOrDate,
   },
 });
 
@@ -22,7 +33,7 @@ const RootMutationType = new GraphQLObjectType({
   fields: {
     createEvent,
     updateEvent,
-    deleteEvent
+    deleteEvent,
   },
 });
 
@@ -30,17 +41,18 @@ const RootSubscriptionType = new GraphQLObjectType({
   name: 'Subscription',
   fields: {
     eventCreated,
-    eventUpdated
-  }
+    eventUpdated,
+  },
 });
 
 const schema = new GraphQLSchema({
   query: RootQueryType,
   mutation: RootMutationType,
-  subscription: RootSubscriptionType
+  subscription: RootSubscriptionType,
 });
 
 module.exports = {
   schema,
-  pubsub
+  pubsub,
+  EventType,
 };
